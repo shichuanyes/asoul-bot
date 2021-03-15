@@ -1,5 +1,5 @@
-# mirai-console-plugin-template
+# asoul-bot
 
-[Mirai Console](https://github.com/mamoe/mirai-console) 插件模板, 使用 Kotlin + Gradle.
+This is a QQ bot plugin dedicated to virtual idol group [A-SOUL](https://space.bilibili.com/703007996/). 
 
-[如何使用](https://github.com/project-mirai/how-to-use-plugin-template)
+This plugin is based on [Mirai](https://github.com/mamoe/mirai) and [Mirai Console](https://github.com/mamoe/mirai-console).
