@@ -1,4 +1,4 @@
-package org.example.mirai.plugin
+package com.github.shichuanyes.plugin.asoul
 
 import net.mamoe.mirai.alsoLogin
 import net.mamoe.mirai.console.MiraiConsole
