@@ -20,8 +20,8 @@ object UpdateDynamics : TimerTask() {
         val dynamicJson = RequestHandler.getTopDynamic(PluginData.UID)
         val card = dynamicJson.data.cards.first()
 
-        if (PluginData.lastDynamic != card.desc.dynamic_id) {
-            PluginData.lastDynamic = card.desc.dynamic_id
+        if (PluginData.lastDynamic < card.desc.timestamp) {
+            PluginData.lastDynamic = card.desc.timestamp
 
             val cardJson = gson.fromJson(card.card, CardJson::class.java)
 

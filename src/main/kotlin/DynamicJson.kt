@@ -17,5 +17,5 @@ data class Card(
 )
 
 data class Desc(
-    val dynamic_id: Long
+    val timestamp: Long
 )
