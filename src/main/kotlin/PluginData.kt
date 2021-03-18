@@ -4,7 +4,7 @@ import net.mamoe.mirai.console.data.AutoSavePluginData
 import net.mamoe.mirai.console.data.value
 
 object PluginData : AutoSavePluginData("data") {
-    val friendSubscribers: MutableSet<Long> by value()
+    val userSubscribers: MutableSet<Long> by value()
     val groupSubscribers: MutableSet<Long> by value()
 
     var lastDynamic: Long by value()

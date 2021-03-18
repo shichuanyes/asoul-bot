@@ -3,10 +3,7 @@ package com.github.shichuanyes.plugin.asoul
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.result.Result
 import com.google.gson.Gson
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import java.io.InputStream
-import java.io.OutputStream
+import java.io.*
 
 object RequestHandler {
     private val gson = Gson()
@@ -18,17 +15,18 @@ object RequestHandler {
         return gson.fromJson(response.data.decodeToString(), DynamicJson::class.java)
     }
 
-    fun downloadImage(url: String): InputStream {
-        var outputStream = OutputStream.nullOutputStream()
+    fun saveImage(url: String): File {
+        var file: File? = null
         val (_, _, result) = Fuel
             .download(url)
-            .streamDestination { response: com.github.kittinunf.fuel.core.Response, _ ->
-                outputStream = ByteArrayOutputStream(response.contentLength.toInt())
-                Pair(outputStream as ByteArrayOutputStream) {
-                    InputStream.nullInputStream()
-                }
+            .fileDestination { _, _ ->
+                val urlPaths = url.split("/")
+                val dir = File(System.getProperty("user.dir") + "/data/asoul-bot/img/")
+                if (!dir.exists()) dir.mkdirs()
+                file = File("${dir}/${urlPaths[urlPaths.lastIndex]}")
+                file!!
             }.responseString()
         if (result is Result.Failure) throw result.getException()
-        return ByteArrayInputStream((outputStream as ByteArrayOutputStream).toByteArray())
+        return file!!
     }
 }
