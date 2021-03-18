@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.github.shichuanyes.plugin.asoul
 
 import net.mamoe.mirai.console.command.CommandSender
@@ -52,12 +54,14 @@ object Asoul : CompositeCommand(
     @SubCommand("add")
     suspend fun CommandSender.add(UID: Long) {
         PluginData.watchlist.add(UID)
+        PluginData.liveStatus[UID] = 0
         sendMessage("添加成功")
     }
 
     @SubCommand("remove")
     suspend fun CommandSender.remove(UID: Long) {
         PluginData.watchlist.remove(UID)
+        PluginData.liveStatus.remove(UID)
         sendMessage("删除成功")
     }
 }

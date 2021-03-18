@@ -7,10 +7,10 @@ import java.io.*
 
 object RequestHandler {
     private val gson = Gson()
-    fun getTopDynamic(hostUid: Long): DynamicJson {
+    fun getTopDynamic(hostUID: Long): DynamicJson {
         val api = "https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history"
 
-        val (_, response, result) = Fuel.get("$api?host_uid=$hostUid&need_top=1").responseString()
+        val (_, response, result) = Fuel.get("$api?host_uid=$hostUID&need_top=1").responseString()
         if (result is Result.Failure) throw result.getException()
         return gson.fromJson(response.data.decodeToString(), DynamicJson::class.java)
     }
@@ -28,5 +28,13 @@ object RequestHandler {
             }.responseString()
         if (result is Result.Failure) throw result.getException()
         return file!!
+    }
+
+    fun getLiveStatus(mid: Long): SpaceJson {
+        val api = "http://api.bilibili.com/x/space/acc/info"
+
+        val (_, response, result) = Fuel.get("$api?mid=$mid").responseString()
+        if (result is Result.Failure) throw result.getException()
+        return gson.fromJson(response.data.decodeToString(), SpaceJson::class.java)
     }
 }

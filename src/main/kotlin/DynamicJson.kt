@@ -4,10 +4,10 @@ data class DynamicJson(
     val code: Int,
     val msg: String,
     val message: String,
-    val data: Data
+    val data: DynamicData
 )
 
-data class Data(
+data class DynamicData(
     val cards: ArrayList<Card>
 )
 

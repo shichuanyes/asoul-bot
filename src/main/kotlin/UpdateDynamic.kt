@@ -14,8 +14,8 @@ object UpdateDynamic : TimerTask() {
     override fun run() {
         val gson = Gson()
 
-        for (UID in PluginData.watchlist) {
-            val dynamicJson = RequestHandler.getTopDynamic(UID)
+        for (uid in PluginData.watchlist) {
+            val dynamicJson = RequestHandler.getTopDynamic(uid)
             val card = dynamicJson.data.cards.first()
 
             if (PluginData.lastDynamic < card.desc.timestamp) {
@@ -32,8 +32,8 @@ object UpdateDynamic : TimerTask() {
                     }
                 }
 
-                PluginMain.launch {
-                    for (bot in Bot.instances) {
+                for (bot in Bot.instances) {
+                    PluginMain.launch {
                         val content = cardJson.item.description ?: cardJson.item.content
                         sendDynamic(bot, PluginData.userSubscribers, true, uname, content, images)
                         sendDynamic(bot, PluginData.groupSubscribers, false, uname, content, images)
