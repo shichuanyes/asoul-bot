@@ -27,7 +27,7 @@ object PluginMain : KotlinPlugin(
 
         AbstractPermitteeId.AnyContact.permit(Asoul.permission)
 
-        Timer("UpdateDynamics", false).schedule(UpdateDynamics, PluginConfig.period, PluginConfig.period)
+        Timer("UpdateDynamics", false).schedule(UpdateDynamic, PluginConfig.period, PluginConfig.period)
 
         logger.info { "Plugin asoul-bot loaded" }
     }

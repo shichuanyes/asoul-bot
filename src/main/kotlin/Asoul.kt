@@ -48,4 +48,16 @@ object Asoul : CompositeCommand(
         }
         sendMessage("取消订阅成功")
     }
+
+    @SubCommand("add")
+    suspend fun CommandSender.add(UID: Long) {
+        PluginData.watchlist.add(UID)
+        sendMessage("添加成功")
+    }
+
+    @SubCommand("remove")
+    suspend fun CommandSender.remove(UID: Long) {
+        PluginData.watchlist.remove(UID)
+        sendMessage("删除成功")
+    }
 }

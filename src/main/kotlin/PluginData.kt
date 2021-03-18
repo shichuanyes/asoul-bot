@@ -9,5 +9,5 @@ object PluginData : AutoSavePluginData("data") {
 
     var lastDynamic: Long by value()
 
-    val UID: Long by value(703007996L)
+    val watchlist: MutableSet<Long> by value(mutableSetOf(703007996L))
 }
