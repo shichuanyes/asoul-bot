@@ -6,6 +6,7 @@ data class CardJson(
 
 data class Item(
     val description: String,
+    val content: String,
     val pictures: ArrayList<Picture>
 )
 
