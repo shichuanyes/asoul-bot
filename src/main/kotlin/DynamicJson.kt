@@ -17,5 +17,15 @@ data class Card(
 )
 
 data class Desc(
-    val timestamp: Long
+    val timestamp: Long,
+    val user_profile: UserProfile,
+    val dynamic_id_str: String
+)
+
+data class UserProfile(
+    val info: Info
+)
+
+data class Info(
+    val uname: String
 )

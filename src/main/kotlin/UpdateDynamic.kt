@@ -19,7 +19,7 @@ object UpdateDynamic : TimerTask() {
                 PluginData.lastDynamic = card.desc.timestamp
 
                 val cardJson = gson.fromJson(card.card, CardJson::class.java)
-                val text = parseDynamic(cardJson)
+                val text = parseDynamic(data, cardJson)
                 val images = parseImages(cardJson)
 
                 for (bot in Bot.instances) {
@@ -32,10 +32,11 @@ object UpdateDynamic : TimerTask() {
         }
     }
 
-    private fun parseDynamic(data: CardJson): PlainText {
-        return PlainText("${data.user.name ?: data.user.uname} 发布了一条动态：\n" +
-            "\n" +
-            data.item.description ?: data.item.content)
+    private fun parseDynamic(data: DynamicData, card: CardJson): PlainText {
+        return PlainText("${data.cards.first().desc.user_profile.info.uname} 发布了一条动态：\n" +
+            "链接：https://t.bilibili.com/${data.cards.first().desc.dynamic_id_str}\n" +
+            "--------------------\n" +
+            card.item.description ?: card.item.content)
     }
 
     private fun parseImages(data: CardJson): MutableList<File> {
