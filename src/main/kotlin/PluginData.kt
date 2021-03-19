@@ -10,5 +10,5 @@ object PluginData : AutoSavePluginData("data") {
     var lastDynamic: Long by value()
     val liveStatus: MutableMap<Long, Int> by value()
 
-    val watchlist: MutableSet<Long> by value(mutableSetOf(703007996L))
+    val watchlist: MutableSet<Long> by value(mutableSetOf(703007996L, 351609538L, 672342685L, 672346917L, 672353429L, 672328094L))
 }

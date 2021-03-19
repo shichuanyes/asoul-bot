@@ -33,7 +33,9 @@ object UpdateDynamic : TimerTask() {
     }
 
     private fun parseDynamic(data: CardJson): PlainText {
-        return PlainText(data.item.description ?: data.item.content)
+        return PlainText("${data.user.name ?: data.user.uname} 发布了一条动态：\n" +
+            "\n" +
+            data.item.description ?: data.item.content)
     }
 
     private fun parseImages(data: CardJson): MutableList<File> {

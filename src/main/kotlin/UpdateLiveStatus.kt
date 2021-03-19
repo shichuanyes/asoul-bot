@@ -34,8 +34,8 @@ object UpdateLiveStatus : TimerTask() {
         return when (data.live_room.liveStatus) {
             1 -> {
                 PlainText("@${data.name} 开播了\n" +
-                        "直播间标题：${data.live_room.title}\n" +
-                        "直播间链接：${data.live_room.url}")
+                    "直播间标题：${data.live_room.title}\n" +
+                    "直播间链接：${data.live_room.url}")
             }
             0 -> {
                 PlainText("@${data.name} 下播了")

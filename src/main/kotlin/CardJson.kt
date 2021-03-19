@@ -6,6 +6,7 @@ data class CardJson(
 )
 
 data class User(
+    val name: String,
     val uname: String
 )
 
