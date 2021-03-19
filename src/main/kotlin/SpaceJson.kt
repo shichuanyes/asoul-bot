@@ -16,5 +16,6 @@ data class LiveRoom(
     val roomStatus: Int,
     val liveStatus: Int,
     val url: String,
-    val title: String
+    val title: String,
+    val cover: String
 )

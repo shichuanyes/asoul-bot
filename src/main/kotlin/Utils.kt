@@ -8,10 +8,6 @@ import net.mamoe.mirai.message.data.isContentEmpty
 import java.io.File
 
 object Utils {
-    suspend fun sendText(bot: Bot, subscribers: MutableSet<Long>, isFriend: Boolean, text: PlainText) {
-        sendTextWithImages(bot, subscribers, isFriend, text, mutableListOf())
-    }
-
     suspend fun sendTextWithImages(bot: Bot, subscribers: MutableSet<Long>, isFriend: Boolean, text: PlainText, images: MutableList<File>) {
         for (subscriber in subscribers) {
             val target = if (isFriend) bot.getFriend(subscriber) else bot.getGroup(subscriber)
