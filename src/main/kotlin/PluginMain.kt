@@ -14,7 +14,7 @@ object PluginMain : KotlinPlugin(
     JvmPluginDescription(
         id = "com.github.shichuanyes.asoul-bot",
         name = "asoul-bot",
-        version = "0.1.0"
+        version = "0.9.0"
     ) {
         author("shichuanyes")
     }
