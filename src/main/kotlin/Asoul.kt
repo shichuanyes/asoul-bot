@@ -21,8 +21,8 @@ object Asoul : CompositeCommand(
         sendMessage("请求间隔现在是${PluginConfig.period} ms")
     }
 
-    @SubCommand("getWatchlist")
-    suspend fun CommandSender.getWatchlist() {
+    @SubCommand("watchlist")
+    suspend fun CommandSender.watchlist() {
         sendMessage(PluginData.watchlist.toString())
     }
 
