@@ -10,7 +10,7 @@ object RequestHandler {
     fun getTopDynamic(hostUID: Long): DynamicJson {
         val api = "https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history"
 
-        val (_, response, result) = Fuel.get("$api?host_uid=$hostUID&need_top=1").responseString()
+        val (_, response, result) = Fuel.get("$api?host_uid=$hostUID").responseString()
         if (result is Result.Failure) throw result.getException()
         return gson.fromJson(response.data.decodeToString(), DynamicJson::class.java)
     }
