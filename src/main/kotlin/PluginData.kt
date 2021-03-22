@@ -7,8 +7,8 @@ object PluginData : AutoSavePluginData("data") {
     val userSubscribers: MutableSet<Long> by value()
     val groupSubscribers: MutableSet<Long> by value()
 
-    var lastDynamic: Long by value()
+    var lastDynamic: Long by value(0L)
     val liveStatus: MutableMap<Long, Int> by value()
 
-    val watchlist: MutableSet<Long> by value(mutableSetOf(703007996L, 351609538L, 672342685L, 672346917L, 672353429L, 672328094L))
+    val watchlist: MutableSet<Long> by value()
 }

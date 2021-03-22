@@ -1,20 +1,13 @@
 package com.github.shichuanyes.plugin.asoul
 
 data class CardJson(
-    val item: Item,
-    val user: User
+    val item: Item
 )
-
-data class User(
-    val name: String,
-    val uname: String
-)
-
 
 data class Item(
-    val description: String,
-    val content: String,
-    val pictures: ArrayList<Picture>
+    val description: String?,
+    val content: String?,
+    val pictures: ArrayList<Picture>?
 )
 
 data class Picture(

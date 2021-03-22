@@ -33,10 +33,11 @@ object UpdateDynamic : TimerTask() {
     }
 
     private fun parseDynamic(data: DynamicData, card: CardJson): PlainText {
-        return PlainText("${data.cards.first().desc.user_profile.info.uname} 发布了一条动态：\n" +
+        return PlainText("@${data.cards.first().desc.user_profile.info.uname} 发布了一条动态：\n" +
             "链接：https://t.bilibili.com/${data.cards.first().desc.dynamic_id_str}\n" +
             "--------------------\n" +
-            card.item.description ?: card.item.content)
+            (card.item.description ?: card.item.content)
+        )
     }
 
     private fun parseImages(data: CardJson): MutableList<File> {
