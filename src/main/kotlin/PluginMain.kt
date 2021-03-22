@@ -19,6 +19,10 @@ object PluginMain : KotlinPlugin(
         author("shichuanyes")
     }
 ) {
+    // TODO: add descriptions and usages
+
+    // TODO: add more debug support
+
     override fun onEnable() {
         PluginData.reload()
         PluginConfig.reload()
@@ -27,6 +31,7 @@ object PluginMain : KotlinPlugin(
 
         AbstractPermitteeId.AnyContact.permit(Asoul.permission)
 
+        // TODO: use separate periods and add support for changing period
         Timer("UpdateDynamic", false).schedule(UpdateDynamic, PluginConfig.period, PluginConfig.period)
         Timer("UpdateLiveStatus", false).schedule(UpdateLiveStatus, PluginConfig.period, PluginConfig.period)
 

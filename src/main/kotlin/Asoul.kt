@@ -10,6 +10,8 @@ import net.mamoe.mirai.contact.User
 object Asoul : CompositeCommand(
     PluginMain, primaryName = "asoul"
 ) {
+    // TODO: use permission
+
     @SubCommand("setPeriod")
     suspend fun CommandSender.setPeriod(period: Long) {
         PluginConfig.period = period
@@ -58,6 +60,7 @@ object Asoul : CompositeCommand(
 
     @SubCommand("add")
     suspend fun CommandSender.add(UID: Long) {
+        // TODO: fix add logic
         PluginData.watchlist.add(UID)
         PluginData.liveStatus[UID] = 0
         sendMessage("添加成功")
