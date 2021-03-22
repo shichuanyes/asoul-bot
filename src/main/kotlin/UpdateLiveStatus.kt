@@ -3,7 +3,6 @@ package com.github.shichuanyes.plugin.asoul
 import kotlinx.coroutines.launch
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.message.data.PlainText
-import java.io.File
 import java.lang.IllegalStateException
 import java.util.*
 
@@ -21,8 +20,7 @@ object UpdateLiveStatus : TimerTask() {
 
                     for (bot in Bot.instances) {
                         PluginMain.launch {
-                            Utils.sendTextWithImages(bot, PluginData.userSubscribers, true, text, mutableListOf(img))
-                            Utils.sendTextWithImages(bot, PluginData.groupSubscribers, false, text, mutableListOf(img))
+                            Utils.broadcastTextWithImages(bot, text, mutableListOf(img))
                         }
                     }
                 }

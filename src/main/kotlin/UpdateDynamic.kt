@@ -24,8 +24,7 @@ object UpdateDynamic : TimerTask() {
 
                 for (bot in Bot.instances) {
                     PluginMain.launch {
-                        Utils.sendTextWithImages(bot, PluginData.userSubscribers, true, text, images)
-                        Utils.sendTextWithImages(bot, PluginData.groupSubscribers, false, text, images)
+                        Utils.broadcastTextWithImages(bot, text, images)
                     }
                 }
             }
