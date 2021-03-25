@@ -9,18 +9,13 @@ import java.util.*
 
 object UpdateDynamic : TimerTask() {
     override fun run() {
-        val gson = Gson()
-
         for (uid in PluginData.watchlist) {
             val data = RequestHandler.getTopDynamic(uid).data
             val card = data.cards.first()
 
             if (PluginData.lastDynamic < card.desc.timestamp) {
                 PluginData.lastDynamic = card.desc.timestamp
-
-                val cardJson = gson.fromJson(card.card, CardJson::class.java)
-                val text = parseDynamic(data, cardJson)
-                val images = parseImages(cardJson)
+                val (text, images) = parseCard(card.card, card.desc.type)
 
                 for (bot in Bot.instances) {
                     PluginMain.launch {
@@ -31,20 +26,46 @@ object UpdateDynamic : TimerTask() {
         }
     }
 
-    private fun parseDynamic(data: DynamicData, card: CardJson): PlainText {
-        return PlainText("@${data.cards.first().desc.user_profile.info.uname} 发布了一条动态：\n" +
-            (card.item.description ?: card.item.content)
-        )
-    }
+    private fun parseCard(card: String, type: Int): Pair<PlainText, MutableList<File>> {
+        val gson = Gson()
 
-    private fun parseImages(data: CardJson): MutableList<File> {
-        val result = mutableListOf<File>()
-        if (!data.item.pictures.isNullOrEmpty()) {
-            for (picture in data.item.pictures) {
-                val image = RequestHandler.saveImage(picture.img_src)
-                result.add(image)
+        var text = ""
+        var images = mutableListOf<File>()
+
+        when (type) {
+            1 -> {
+                val repostJson = gson.fromJson(card, RepostDynamic::class.java)
+                text = "@${repostJson.user.uname} 转发了：\n" +
+                    "${repostJson.item.content}\n" +
+                    "-------------------------\n"
+                val (origText, origImages) = parseCard(repostJson.origin, repostJson.item.orig_type)
+                text += origText
+                images = origImages
+            }
+            2 -> {
+                val pictureJson = gson.fromJson(card, PictureDynamic::class.java)
+                text = "@${pictureJson.user.name} 发布了：\n" +
+                    pictureJson.item.description
+                images = mutableListOf()
+                for (picture in pictureJson.item.pictures) {
+                    images.add(RequestHandler.saveImage(picture.img_src))
+                }
+            }
+            4 -> {
+                val textJson = gson.fromJson(card, TextDynamic::class.java)
+                text = "@${textJson.user.uname} 发布了：\n" +
+                    textJson.item.content
+            }
+            8 -> {
+                val videoJson = gson.fromJson(card, VideoDynamic::class.java)
+                text = "@${videoJson.owner.name} 投稿了视频：\n" +
+                    "${videoJson.title}\n" +
+                    "简介：${videoJson.desc}\n" +
+                    "链接：${videoJson.short_link}"
+                images = mutableListOf(RequestHandler.saveImage(videoJson.pic))
             }
         }
-        return result
+
+        return Pair(PlainText(text), images)
     }
 }

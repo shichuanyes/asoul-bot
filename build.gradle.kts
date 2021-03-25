@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.github.shichuanyes"
-version = "0.9.1"
+version = "0.9.2"
 
 repositories {
     mavenLocal()
