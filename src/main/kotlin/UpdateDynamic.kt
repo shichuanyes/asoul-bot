@@ -60,9 +60,14 @@ object UpdateDynamic : TimerTask() {
                 val videoJson = gson.fromJson(card, VideoDynamic::class.java)
                 text = "@${videoJson.owner.name} 投稿了视频：\n" +
                     "${videoJson.title}\n" +
-                    "简介：${videoJson.desc}\n" +
+                    "简介：\n" +
+                    "${videoJson.desc}\n" +
+                    "\n" +
                     "链接：${videoJson.short_link}"
                 images = mutableListOf(RequestHandler.saveImage(videoJson.pic))
+            }
+            else -> {
+                text = "不支持的动态类型"
             }
         }
 
