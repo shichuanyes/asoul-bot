@@ -8,7 +8,7 @@ import java.io.*
 object RequestHandler {
     private val gson = Gson()
 
-    // TODO: handle errors and exceptions
+    // TODO: better errors and exceptions
 
     fun getTopDynamic(hostUID: Long): DynamicJson {
         val api = "https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history"

@@ -9,21 +9,25 @@ import java.util.*
 object UpdateLiveStatus : TimerTask() {
     override fun run() {
         for (mid in PluginData.watchlist) {
-            val data = RequestHandler.getLiveStatus(mid).data
+            try {
+                val data = RequestHandler.getLiveStatus(mid).data
 
-            if (data.live_room.roomStatus == 1) {
-                if (PluginData.liveStatus[mid] != data.live_room.liveStatus) {
-                    PluginData.liveStatus[mid] = data.live_room.liveStatus
+                if (data.live_room.roomStatus == 1) {
+                    if (PluginData.liveStatus[mid] != data.live_room.liveStatus) {
+                        PluginData.liveStatus[mid] = data.live_room.liveStatus
 
-                    val text = parseLiveStatus(data)
-                    val img = RequestHandler.saveImage(data.live_room.cover)
+                        val text = parseLiveStatus(data)
+                        val img = RequestHandler.saveImage(data.live_room.cover)
 
-                    for (bot in Bot.instances) {
-                        PluginMain.launch {
-                            Utils.broadcastTextWithImages(bot, text, mutableListOf(img))
+                        for (bot in Bot.instances) {
+                            PluginMain.launch {
+                                Utils.broadcastTextWithImages(bot, text, mutableListOf(img))
+                            }
                         }
                     }
                 }
+            } catch (e: Exception) {
+                PluginMain.logger.warning(e.toString())
             }
         }
     }

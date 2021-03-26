@@ -10,18 +10,22 @@ import java.util.*
 object UpdateDynamic : TimerTask() {
     override fun run() {
         for (uid in PluginData.watchlist) {
-            val data = RequestHandler.getTopDynamic(uid).data
-            val card = data.cards.first()
+            try {
+                val data = RequestHandler.getTopDynamic(uid).data
+                val card = data.cards.first()
 
-            if (PluginData.lastDynamic < card.desc.timestamp) {
-                PluginData.lastDynamic = card.desc.timestamp
-                val (text, images) = parseCard(card.card, card.desc.type)
+                if (PluginData.lastDynamic < card.desc.timestamp) {
+                    PluginData.lastDynamic = card.desc.timestamp
+                    val (text, images) = parseCard(card.card, card.desc.type)
 
-                for (bot in Bot.instances) {
-                    PluginMain.launch {
-                        Utils.broadcastTextWithImages(bot, text, images)
+                    for (bot in Bot.instances) {
+                        PluginMain.launch {
+                            Utils.broadcastTextWithImages(bot, text, images)
+                        }
                     }
                 }
+            } catch (e: Exception) {
+                PluginMain.logger.warning(e.toString())
             }
         }
     }
