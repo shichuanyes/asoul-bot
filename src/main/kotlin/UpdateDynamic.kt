@@ -26,11 +26,11 @@ object UpdateDynamic : TimerTask() {
         }
     }
 
-    private fun parseCard(card: String, type: Int): Pair<PlainText, MutableList<File>> {
+    private fun parseCard(card: String, type: Int): Pair<PlainText, MutableList<File>?> {
         val gson = Gson()
 
-        var text = ""
-        var images = mutableListOf<File>()
+        var text: String
+        var images: MutableList<File>? = null
 
         when (type) {
             1 -> {
