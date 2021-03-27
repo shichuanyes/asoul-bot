@@ -1,5 +1,6 @@
 package com.github.shichuanyes.plugin.asoul
 
+import com.github.kittinunf.fuel.core.FuelError
 import kotlinx.coroutines.launch
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.message.data.PlainText
@@ -26,8 +27,12 @@ object UpdateLiveStatus : TimerTask() {
                         }
                     }
                 }
+            } catch (fe: FuelError) {
+                PluginMain.logger.warning(fe.toString())
+            } catch (ae: APIException) {
+                PluginMain.logger.warning(ae.toString())
             } catch (e: Exception) {
-                PluginMain.logger.warning(e.toString())
+                PluginMain.logger.error(e.toString())
             }
         }
     }
