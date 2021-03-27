@@ -32,7 +32,7 @@ object PluginMain : KotlinPlugin(
         AbstractPermitteeId.AnyContact.permit(Asoul.permission)
 
         // TODO: use separate periods and add support for changing period
-        Timer("UpdateDynamic", false).schedule(UpdateDynamic, PluginConfig.period, PluginConfig.period)
+        Timer("UpdateDynamic", false).schedule(UpdateDynamic, PluginConfig.period / 2, PluginConfig.period)
         Timer("UpdateLiveStatus", false).schedule(UpdateLiveStatus, PluginConfig.period, PluginConfig.period)
 
         logger.info { "Plugin asoul-bot loaded" }
