@@ -1,7 +1,9 @@
 package com.github.shichuanyes.plugin.asoul
 
 import com.github.kittinunf.fuel.core.FuelError
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.*
 
 object UpdateDynamic : TimerTask() {
@@ -18,7 +20,9 @@ object UpdateDynamic : TimerTask() {
                         Utils.broadcastTextWithImages(text, images)
                     }
                 }
-                Thread.sleep(PluginConfig.delay)
+                runBlocking {
+                    delay(PluginConfig.delay)
+                }
             } catch (fe: FuelError) {
                 PluginMain.logger.warning(fe.toString())
             } catch (ae: APIException) {
