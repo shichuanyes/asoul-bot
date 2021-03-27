@@ -2,9 +2,6 @@ package com.github.shichuanyes.plugin.asoul
 
 import com.github.kittinunf.fuel.core.FuelError
 import kotlinx.coroutines.launch
-import net.mamoe.mirai.Bot
-import net.mamoe.mirai.message.data.PlainText
-import java.lang.IllegalStateException
 import java.util.*
 
 object UpdateLiveStatus : TimerTask() {
@@ -16,39 +13,19 @@ object UpdateLiveStatus : TimerTask() {
                 if (data.live_room.roomStatus == 1) {
                     if (PluginData.liveStatus[mid] != data.live_room.liveStatus) {
                         PluginData.liveStatus[mid] = data.live_room.liveStatus
-
-                        val text = parseLiveStatus(data)
-                        val img = RequestHandler.saveImage(data.live_room.cover)
-
-                        for (bot in Bot.instances) {
-                            PluginMain.launch {
-                                Utils.broadcastTextWithImages(bot, text, mutableListOf(img))
-                            }
+                        val (text, images) = Parser.parseLiveStatus(data)
+                        PluginMain.launch {
+                            Utils.broadcastTextWithImages(text, images)
                         }
                     }
                 }
+                Thread.sleep(PluginConfig.delay)
             } catch (fe: FuelError) {
                 PluginMain.logger.warning(fe.toString())
             } catch (ae: APIException) {
                 PluginMain.logger.warning(ae.toString())
             } catch (e: Exception) {
                 PluginMain.logger.error(e.toString())
-            }
-        }
-    }
-
-    private fun parseLiveStatus(data: SpaceData): PlainText {
-        return when (data.live_room.liveStatus) {
-            1 -> {
-                PlainText("@${data.name} 开播了\n" +
-                    "直播间标题：${data.live_room.title}\n" +
-                    "直播间链接：${data.live_room.url}")
-            }
-            0 -> {
-                PlainText("@${data.name} 下播了")
-            }
-            else -> {
-                throw IllegalStateException()
             }
         }
     }
