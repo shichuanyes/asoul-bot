@@ -13,7 +13,7 @@ object UpdateLiveStatus : TimerTask() {
                 delay(PluginConfig.delay)
             }
             try {
-                val data = RequestHandler.getLiveStatus(mid).data
+                val data = RequestHandler.getLiveStatus(mid)
 
                 if (data.live_room.roomStatus == 1) {
                     if (PluginData.liveStatus[mid] != data.live_room.liveStatus) {

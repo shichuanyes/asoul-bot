@@ -11,14 +11,14 @@ object RequestHandler {
     private val gson = Gson()
 
     @Throws(FuelError::class, JsonSyntaxException::class, APIException::class)
-    fun getTopDynamic(hostUID: Long): DynamicJson {
+    fun getTopDynamic(hostUID: Long): DynamicData {
         val api = "https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history"
 
         val (_, response, result) = Fuel.get("$api?host_uid=$hostUID").responseString()
         if (result is Result.Failure) throw result.getException()
         val json: DynamicJson = gson.fromJson(response.data.decodeToString(), DynamicJson::class.java)
         if (json.code != 0) throw APIException(json.code, json.message)
-        return json
+        return json.data
     }
 
     @Throws(FuelError::class)
@@ -38,13 +38,13 @@ object RequestHandler {
     }
 
     @Throws(FuelError::class, JsonSyntaxException::class, APIException::class)
-    fun getLiveStatus(mid: Long): SpaceJson {
+    fun getLiveStatus(mid: Long): SpaceData {
         val api = "http://api.bilibili.com/x/space/acc/info"
 
         val (_, response, result) = Fuel.get("$api?mid=$mid").responseString()
         if (result is Result.Failure) throw result.getException()
         val json = gson.fromJson(response.data.decodeToString(), SpaceJson::class.java)
         if (json.code != 0) throw APIException(json.code, json.message)
-        return json
+        return json.data
     }
 }

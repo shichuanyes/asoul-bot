@@ -13,7 +13,7 @@ object UpdateDynamic : TimerTask() {
                 delay(PluginConfig.delay)
             }
             try {
-                val data = RequestHandler.getTopDynamic(uid).data
+                val data = RequestHandler.getTopDynamic(uid)
                 val card = data.cards.first()
 
                 if (PluginData.lastDynamic < card.desc.timestamp) {
