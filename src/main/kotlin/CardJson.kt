@@ -1,24 +1,5 @@
 package com.github.shichuanyes.plugin.asoul
 
-//data class CardJson(
-//    val item: Item?,
-//
-//    val desc: String?,
-//    val pic: String?,
-//    val title: String?
-//)
-//
-//data class Item(
-//    val description: String?,
-//    val pictures: ArrayList<Picture>?,
-//
-//    val content: String?
-//)
-//
-//data class Picture(
-//    val img_src: String
-//)
-
 data class RepostDynamic(
     val user: User,
     val item: RepostItem,

@@ -9,6 +9,9 @@ import java.util.*
 object UpdateDynamic : TimerTask() {
     override fun run() {
         for (uid in PluginData.watchlist) {
+            runBlocking {
+                delay(PluginConfig.delay)
+            }
             try {
                 val data = RequestHandler.getTopDynamic(uid).data
                 val card = data.cards.first()
@@ -19,9 +22,6 @@ object UpdateDynamic : TimerTask() {
                     PluginMain.launch {
                         Utils.broadcastTextWithImages(text, images)
                     }
-                }
-                runBlocking {
-                    delay(PluginConfig.delay)
                 }
             } catch (fe: FuelError) {
                 PluginMain.logger.warning(fe.toString())

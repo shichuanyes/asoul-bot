@@ -5,6 +5,6 @@ import net.mamoe.mirai.console.data.value
 
 object PluginConfig : AutoSavePluginConfig("config") {
     var master: Long by value(0L)
-    var delay: Long by value(100L)
+    var delay: Long by value(1000L)
     var period: Long by value(30000L)
 }

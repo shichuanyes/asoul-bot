@@ -9,6 +9,9 @@ import java.util.*
 object UpdateLiveStatus : TimerTask() {
     override fun run() {
         for (mid in PluginData.watchlist) {
+            runBlocking {
+                delay(PluginConfig.delay)
+            }
             try {
                 val data = RequestHandler.getLiveStatus(mid).data
 
@@ -20,9 +23,6 @@ object UpdateLiveStatus : TimerTask() {
                             Utils.broadcastTextWithImages(text, images)
                         }
                     }
-                }
-                runBlocking {
-                    delay(PluginConfig.delay)
                 }
             } catch (fe: FuelError) {
                 PluginMain.logger.warning(fe.toString())
