@@ -23,6 +23,17 @@ object Asoul : CompositeCommand(
         sendMessage("请求间隔现在是${PluginConfig.period} ms")
     }
 
+    @SubCommand("setDelay")
+    suspend fun CommandSender.setDelay(delay: Long) {
+        PluginConfig.delay = delay
+        sendMessage("请求延迟已被设置为$delay ms")
+    }
+
+    @SubCommand("getDelay")
+    suspend fun CommandSender.getDelay() {
+        sendMessage("请求延迟现在是${PluginConfig.delay} ms")
+    }
+
     @SubCommand("watchlist")
     suspend fun CommandSender.watchlist() {
         sendMessage(PluginData.watchlist.toString())
