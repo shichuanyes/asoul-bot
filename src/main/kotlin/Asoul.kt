@@ -11,11 +11,17 @@ object Asoul : CompositeCommand(
     PluginMain, primaryName = "asoul"
 ) {
     // TODO: use permission
+    private const val MIN_DELAY = 200L
 
     @SubCommand("setPeriod")
     suspend fun CommandSender.setPeriod(period: Long) {
-        PluginConfig.period = period
-        sendMessage("请求间隔已被设置为$period ms")
+        val threshold = PluginData.watchlist.size * PluginConfig.delay
+        if (period <= threshold) {
+            sendMessage("设置失败 请求间隔不能小于${PluginData.watchlist.size}*${PluginConfig.delay}=${threshold} ms")
+        } else {
+            PluginConfig.period = period
+            sendMessage("请求间隔已被设置为$period ms")
+        }
     }
 
     @SubCommand("getPeriod")
@@ -25,8 +31,12 @@ object Asoul : CompositeCommand(
 
     @SubCommand("setDelay")
     suspend fun CommandSender.setDelay(delay: Long) {
-        PluginConfig.delay = delay
-        sendMessage("请求延迟已被设置为$delay ms")
+        if (delay <= MIN_DELAY) {
+            sendMessage("设置失败 小于$MIN_DELAY ms的请求延迟可能会触发B站风控")
+        } else {
+            PluginConfig.delay = delay
+            sendMessage("请求延迟已被设置为$delay ms")
+        }
     }
 
     @SubCommand("getDelay")
@@ -75,6 +85,11 @@ object Asoul : CompositeCommand(
         PluginData.watchlist.add(UID)
         PluginData.liveStatus[UID] = 0
         sendMessage("添加成功")
+        val threshold = PluginData.watchlist.size * PluginConfig.delay
+        if (PluginConfig.period < threshold) {
+            PluginConfig.period = threshold
+            sendMessage("请求间隔已被设置为$threshold ms")
+        }
     }
 
     @SubCommand("remove")
