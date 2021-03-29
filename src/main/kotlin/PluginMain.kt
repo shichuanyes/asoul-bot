@@ -23,6 +23,9 @@ object PluginMain : KotlinPlugin(
 
     // TODO: add more debug support
 
+    private var dynamicTimer: Timer? = null
+    private var liveTimer: Timer? = null
+
     override fun onEnable() {
         PluginData.reload()
         PluginConfig.reload()
@@ -32,15 +35,18 @@ object PluginMain : KotlinPlugin(
         AbstractPermitteeId.AnyContact.permit(Asoul.permission)
 
         // TODO: use separate periods and add support for changing period
-        Timer("UpdateDynamic", false)
-            .scheduleAtFixedRate(UpdateDynamic, PluginConfig.period, PluginConfig.period)
-        Timer("UpdateLiveStatus", false)
-            .scheduleAtFixedRate(UpdateLiveStatus, PluginConfig.period, PluginConfig.period)
+        dynamicTimer = Timer("UpdateDynamic", false)
+        dynamicTimer?.scheduleAtFixedRate(UpdateDynamic, PluginConfig.period, PluginConfig.period)
+        liveTimer = Timer("UpdateLiveStatus", false)
+        liveTimer?.scheduleAtFixedRate(UpdateLiveStatus, PluginConfig.period, PluginConfig.period)
 
         logger.info { "Plugin asoul-bot loaded" }
     }
 
     override fun onDisable() {
+        dynamicTimer?.cancel()
+        liveTimer?.cancel()
+
         AbstractPermitteeId.AnyContact.cancel(Asoul.permission, true)
 
         Asoul.unregister()
