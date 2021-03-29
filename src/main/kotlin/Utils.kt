@@ -32,7 +32,7 @@ object Utils {
 
     suspend fun reportException(hasException: Boolean, e: Exception?) {
         if (PluginConfig.reportException) {
-            if (!PluginData.inException != hasException) {
+            if (PluginData.inException != hasException) {
                 PluginData.inException = hasException
                 for (bot in Bot.instances) {
                     val target = bot.getFriend(PluginConfig.master)
