@@ -4,6 +4,7 @@ import com.github.kittinunf.fuel.core.FuelError
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import net.mamoe.mirai.Bot
 import java.util.*
 
 object UpdateLiveStatus : TimerTask() {
@@ -14,6 +15,10 @@ object UpdateLiveStatus : TimerTask() {
             }
             try {
                 val data = RequestHandler.getLiveStatus(mid)
+
+                PluginMain.launch {
+                    Utils.reportException(false, null)
+                }
 
                 if (data.live_room.roomStatus == 1) {
                     if (PluginData.liveStatus[mid] != data.live_room.liveStatus) {
@@ -26,6 +31,9 @@ object UpdateLiveStatus : TimerTask() {
                 }
             } catch (fe: FuelError) {
                 PluginMain.logger.warning(fe.toString())
+                PluginMain.launch {
+                    Utils.reportException(true, fe)
+                }
             } catch (ae: APIException) {
                 PluginMain.logger.warning(ae.toString())
             } catch (e: Exception) {

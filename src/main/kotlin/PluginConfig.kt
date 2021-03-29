@@ -7,4 +7,6 @@ object PluginConfig : AutoSavePluginConfig("config") {
     var master: Long by value(0L)
     var delay: Long by value(1000L)
     var period: Long by value(30000L)
+
+    var reportException: Boolean by value(true)
 }

@@ -29,4 +29,20 @@ object Utils {
         }
         if (!msg.isContentEmpty()) target?.sendMessage(msg)
     }
+
+    suspend fun reportException(hasException: Boolean, e: Exception?) {
+        if (PluginConfig.reportException) {
+            if (!PluginData.inException != hasException) {
+                PluginData.inException = hasException
+                for (bot in Bot.instances) {
+                    val target = bot.getFriend(PluginConfig.master)
+                    if (hasException) {
+                        target?.sendMessage(e?.toString() ?: "Unknown exception")
+                    } else {
+                        target?.sendMessage("Exception gone")
+                    }
+                }
+            }
+        }
+    }
 }
