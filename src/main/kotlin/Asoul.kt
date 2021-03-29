@@ -98,4 +98,10 @@ object Asoul : CompositeCommand(
         PluginData.liveStatus.remove(UID)
         sendMessage("删除成功")
     }
+
+    @SubCommand("setMaster")
+    suspend fun CommandSender.setMaster(id: Long) {
+        PluginConfig.master = id
+        sendMessage("已设置Bot所有者为$id")
+    }
 }

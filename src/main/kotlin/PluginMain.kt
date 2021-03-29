@@ -30,6 +30,10 @@ object PluginMain : KotlinPlugin(
         PluginData.reload()
         PluginConfig.reload()
 
+        if (PluginConfig.master == 0L) {
+            logger.warning("Please set master id")
+        }
+
         Asoul.register()
 
         AbstractPermitteeId.AnyContact.permit(Asoul.permission)
